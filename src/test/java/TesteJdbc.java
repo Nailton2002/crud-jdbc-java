@@ -37,4 +37,17 @@ public class TesteJdbc {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void listarPorId(){
+        SingleConnection.getConnection();
+
+        UsuarioDao objDao = new UsuarioDao();
+        try {
+            Usuario obj = objDao.listarPorId(1L);
+            System.out.println(obj);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

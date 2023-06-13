@@ -53,4 +53,19 @@ public class UsuarioDao {
         }
         return list;
     }
+
+    public Usuario listarPorId(Long id) throws Exception{
+        Usuario obj = new Usuario();
+        String sql = "select * from usuario where id = " + id;
+
+        PreparedStatement select = connection.prepareStatement(sql);
+        ResultSet resultSet = select.executeQuery();
+
+        while (resultSet.next()){
+            obj.setId(resultSet.getLong("id"));
+            obj.setNome(resultSet.getString("nome"));
+            obj.setEmail(resultSet.getString("email"));
+        }
+        return obj;
+    }
 }
