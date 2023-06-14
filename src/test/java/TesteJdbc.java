@@ -50,4 +50,50 @@ public class TesteJdbc {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void atualilzar() {
+        SingleConnection.getConnection();
+        try {
+            UsuarioDao objDao = new UsuarioDao();
+            Usuario obj = objDao.listarPorId(4L);
+            obj.setNome("José atualizado!");
+            objDao.atualizar(obj);
+            System.out.println(obj.getNome());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

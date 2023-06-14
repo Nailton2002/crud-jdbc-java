@@ -68,4 +68,60 @@ public class UsuarioDao {
         }
         return obj;
     }
+
+    public void atualizar(Usuario usuario) {
+        try {
+            String sql = "update usuario set nome = ? where id = " + usuario.getId();
+            PreparedStatement atualizar = connection.prepareStatement(sql);
+            atualizar.setString(1, usuario.getNome());
+            atualizar.execute();
+            connection.commit();
+        } catch (Exception e){
+            try {
+                connection.rollback();
+            } catch (SQLException eSql){
+                eSql.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
