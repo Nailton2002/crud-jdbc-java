@@ -1,6 +1,7 @@
 package com.jdbc.dao;
 
 import com.jdbc.conexao.SingleConnection;
+import com.jdbc.model.BeanUsuarioFone;
 import com.jdbc.model.Fone;
 import com.jdbc.model.Usuario;
 
@@ -121,6 +122,29 @@ public class UsuarioDao {
         }
     }
 
+    public List<BeanUsuarioFone> listarFoneUsuario(Long idUser){
+        List<BeanUsuarioFone> list = new ArrayList<BeanUsuarioFone>();
+        String sql = " select nome, numero, email from fone as fone_user ";
+               sql+= " inner join usuario as usuario_fone ";
+               sql+= " on fone_user.usuario = usuario_fone.id ";
+               sql+= " where usuario_fone.id = " + idUser;
+               try {
+
+                   PreparedStatement listarFoneUsuario = connection.prepareStatement(sql);
+                   ResultSet resultSet = listarFoneUsuario.executeQuery();
+
+                   while (resultSet.next()) {
+                       BeanUsuarioFone obj = new BeanUsuarioFone();
+                       obj.setNome(resultSet.getString("nome"));
+                       obj.setNumero(resultSet.getString("numero"));
+                       obj.setEmail(resultSet.getString("email"));
+                       list.add(obj);
+                   }
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+        return list;
+    }
 
 
 

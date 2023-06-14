@@ -1,5 +1,6 @@
 import com.jdbc.conexao.SingleConnection;
 import com.jdbc.dao.UsuarioDao;
+import com.jdbc.model.BeanUsuarioFone;
 import com.jdbc.model.Fone;
 import com.jdbc.model.Usuario;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,6 @@ public class TesteJdbc {
             e.printStackTrace();
         }
     }
-
     @Test
     public void listarPorId(){
         SingleConnection.getConnection();
@@ -90,7 +90,23 @@ public class TesteJdbc {
         System.out.println(obj);
     }
 
+    @Test
+    public void listarFoneUsuario(){
+        SingleConnection.getConnection();
 
+        UsuarioDao objDao = new UsuarioDao();
+        try {
+            List<BeanUsuarioFone> list = objDao.listarFoneUsuario(9L);
+            for (BeanUsuarioFone obj : list){
+                System.out.println(obj);
+                System.out.println("============================================================");
+                System.out.println(obj.getNome());
+                System.out.println("============================================================");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
