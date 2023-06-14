@@ -16,11 +16,11 @@ public class UsuarioDao {
 
     private Connection connection;
 
-    public UsuarioDao(){
+    public UsuarioDao() {
         connection = SingleConnection.getConnection();
     }
 
-    public void salvar(Usuario usuario){
+    public void salvar(Usuario usuario) {
         try {
             String sql = "insert into usuario(nome, email) values (?,?)";
             PreparedStatement insert = connection.prepareStatement(sql);
@@ -28,24 +28,24 @@ public class UsuarioDao {
             insert.setString(2, usuario.getEmail());
             insert.execute();
             connection.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             try {
                 connection.rollback();
-            } catch (SQLException eSql){
+            } catch (SQLException eSql) {
                 eSql.printStackTrace();
             }
             e.printStackTrace();
         }
     }
 
-    public List<Usuario> listar() throws Exception{
+    public List<Usuario> listar() throws Exception {
         List<Usuario> list = new ArrayList<Usuario>();
         String sql = "select * from usuario";
 
         PreparedStatement listar = connection.prepareStatement(sql);
         ResultSet resultSet = listar.executeQuery();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             Usuario obj = new Usuario();
             obj.setId(resultSet.getLong("id"));
             obj.setNome(resultSet.getString("nome"));
@@ -55,14 +55,14 @@ public class UsuarioDao {
         return list;
     }
 
-    public Usuario listarPorId(Long id) throws Exception{
+    public Usuario listarPorId(Long id) throws Exception {
         Usuario obj = new Usuario();
         String sql = "select * from usuario where id = " + id;
 
         PreparedStatement listarPorId = connection.prepareStatement(sql);
         ResultSet resultSet = listarPorId.executeQuery();
 
-        while (resultSet.next()){
+        while (resultSet.next()) {
             obj.setId(resultSet.getLong("id"));
             obj.setNome(resultSet.getString("nome"));
             obj.setEmail(resultSet.getString("email"));
@@ -103,7 +103,7 @@ public class UsuarioDao {
         }
     }
 
-    public void salvarFone(Fone fone){
+    public void salvarFone(Fone fone) {
         try {
             String sql = "insert into fone(numero, tipo, usuario) values (?,?,?)";
             PreparedStatement insert = connection.prepareStatement(sql);
@@ -112,43 +112,43 @@ public class UsuarioDao {
             insert.setLong(3, fone.getUsuario());
             insert.execute();
             connection.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             try {
                 connection.rollback();
-            } catch (SQLException eSql){
+            } catch (SQLException eSql) {
                 eSql.printStackTrace();
             }
             e.printStackTrace();
         }
     }
 
-    public List<BeanUsuarioFone> listarFoneUsuario(Long idUser){
+    public List<BeanUsuarioFone> listarFoneUsuario(Long idUser) {
         List<BeanUsuarioFone> list = new ArrayList<BeanUsuarioFone>();
         String sql = " select nome, numero, email from fone as fone_user ";
-               sql+= " inner join usuario as usuario_fone ";
-               sql+= " on fone_user.usuario = usuario_fone.id ";
-               sql+= " where usuario_fone.id = " + idUser;
-               try {
+        sql += " inner join usuario as usuario_fone ";
+        sql += " on fone_user.usuario = usuario_fone.id ";
+        sql += " where usuario_fone.id = " + idUser;
+        try {
 
-                   PreparedStatement listarFoneUsuario = connection.prepareStatement(sql);
-                   ResultSet resultSet = listarFoneUsuario.executeQuery();
+            PreparedStatement listarFoneUsuario = connection.prepareStatement(sql);
+            ResultSet resultSet = listarFoneUsuario.executeQuery();
 
-                   while (resultSet.next()) {
-                       BeanUsuarioFone obj = new BeanUsuarioFone();
-                       obj.setNome(resultSet.getString("nome"));
-                       obj.setNumero(resultSet.getString("numero"));
-                       obj.setEmail(resultSet.getString("email"));
-                       list.add(obj);
-                   }
-               }catch (Exception e){
-                   e.printStackTrace();
-               }
+            while (resultSet.next()) {
+                BeanUsuarioFone obj = new BeanUsuarioFone();
+                obj.setNome(resultSet.getString("nome"));
+                obj.setNumero(resultSet.getString("numero"));
+                obj.setEmail(resultSet.getString("email"));
+                list.add(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
 
     public void deletarFoneUsuario(Long idUser) {
         try {
-            String sqlFone    = "delete from fone where usuario =" + idUser;
+            String sqlFone = "delete from fone where usuario =" + idUser;
             String sqlUsuario = "delete from usuario where id   =" + idUser;
 
             PreparedStatement deletarFoneUsuario = connection.prepareStatement(sqlFone);
@@ -169,40 +169,14 @@ public class UsuarioDao {
         }
     }
 
+    public Boolean emailExiste(String email) throws Exception{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            String sql = "select count(1) > 0 as exist from usuario where upper(email) = upper('" + email + "')";
+            PreparedStatement emailExiste = connection.prepareStatement(sql);
+            ResultSet resultSet = emailExiste.executeQuery();
+            resultSet.next();
+            return resultSet.getBoolean("existe");
+    }
 
 
 }

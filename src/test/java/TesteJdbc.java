@@ -23,13 +23,13 @@ public class TesteJdbc {
     }
 
     @Test
-    public void listar(){
+    public void listar() {
         SingleConnection.getConnection();
 
         UsuarioDao objDao = new UsuarioDao();
         try {
             List<Usuario> list = objDao.listar();
-            for (Usuario obj : list){
+            for (Usuario obj : list) {
                 System.out.println(obj);
                 System.out.println("============================================================");
                 System.out.println(obj.getNome());
@@ -39,15 +39,16 @@ public class TesteJdbc {
             e.printStackTrace();
         }
     }
+
     @Test
-    public void listarPorId(){
+    public void listarPorId() {
         SingleConnection.getConnection();
 
         UsuarioDao objDao = new UsuarioDao();
         try {
             Usuario obj = objDao.listarPorId(7L);
             System.out.println(obj);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -61,17 +62,18 @@ public class TesteJdbc {
             obj.setNome("José atualizado!");
             objDao.atualizar(obj);
             System.out.println(obj.getNome());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     @Test
     public void deletar() {
         SingleConnection.getConnection();
         try {
             UsuarioDao objDao = new UsuarioDao();
             objDao.deletar(1L);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -91,13 +93,13 @@ public class TesteJdbc {
     }
 
     @Test
-    public void listarFoneUsuario(){
+    public void listarFoneUsuario() {
         SingleConnection.getConnection();
 
         UsuarioDao objDao = new UsuarioDao();
         try {
             List<BeanUsuarioFone> list = objDao.listarFoneUsuario(9L);
-            for (BeanUsuarioFone obj : list){
+            for (BeanUsuarioFone obj : list) {
                 System.out.println(obj);
                 System.out.println("============================================================");
                 System.out.println(obj.getNome());
@@ -114,35 +116,27 @@ public class TesteJdbc {
         try {
             UsuarioDao objDao = new UsuarioDao();
             objDao.deletarFoneUsuario(9L);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @Test
+    public String emailExiste() throws Exception {
+        SingleConnection.getConnection();
+
+        UsuarioDao objDao = new UsuarioDao();
+
+        List<Usuario> list = objDao.listar();
+        for (Usuario obj : list) {
+            if (obj.getEmail().isEmpty()) {
+                return "nao existe";
+            } else {
+                return emailExiste();
+            }
+        }
+        return null;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    }
 }
