@@ -108,7 +108,16 @@ public class TesteJdbc {
         }
     }
 
-
+    @Test
+    public void deletarFoneUsuario() {
+        SingleConnection.getConnection();
+        try {
+            UsuarioDao objDao = new UsuarioDao();
+            objDao.deletarFoneUsuario(9L);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 

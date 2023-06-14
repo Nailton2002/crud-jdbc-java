@@ -146,8 +146,28 @@ public class UsuarioDao {
         return list;
     }
 
+    public void deletarFoneUsuario(Long idUser) {
+        try {
+            String sqlFone    = "delete from fone where usuario =" + idUser;
+            String sqlUsuario = "delete from usuario where id   =" + idUser;
 
+            PreparedStatement deletarFoneUsuario = connection.prepareStatement(sqlFone);
+            deletarFoneUsuario.executeUpdate();
+            connection.commit();
 
+            deletarFoneUsuario = connection.prepareStatement(sqlUsuario);
+            deletarFoneUsuario.executeUpdate();
+            connection.commit();
+
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException eSql) {
+                eSql.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
 
 
 
