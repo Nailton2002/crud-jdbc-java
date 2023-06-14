@@ -40,8 +40,8 @@ public class UsuarioDao {
         List<Usuario> list = new ArrayList<Usuario>();
         String sql = "select * from usuario";
 
-        PreparedStatement select = connection.prepareStatement(sql);
-        ResultSet resultSet = select.executeQuery();
+        PreparedStatement listar = connection.prepareStatement(sql);
+        ResultSet resultSet = listar.executeQuery();
 
         while (resultSet.next()){
             Usuario obj = new Usuario();
@@ -57,8 +57,8 @@ public class UsuarioDao {
         Usuario obj = new Usuario();
         String sql = "select * from usuario where id = " + id;
 
-        PreparedStatement select = connection.prepareStatement(sql);
-        ResultSet resultSet = select.executeQuery();
+        PreparedStatement listarPorId = connection.prepareStatement(sql);
+        ResultSet resultSet = listarPorId.executeQuery();
 
         while (resultSet.next()){
             obj.setId(resultSet.getLong("id"));
@@ -75,10 +75,26 @@ public class UsuarioDao {
             atualizar.setString(1, usuario.getNome());
             atualizar.execute();
             connection.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             try {
                 connection.rollback();
-            } catch (SQLException eSql){
+            } catch (SQLException eSql) {
+                eSql.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+    public void deletar(Long id) {
+        try {
+            String sql = "delete from usuario where id = " + id;
+            PreparedStatement deletar = connection.prepareStatement(sql);
+            deletar.execute();
+            connection.commit();
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException eSql) {
                 eSql.printStackTrace();
             }
             e.printStackTrace();

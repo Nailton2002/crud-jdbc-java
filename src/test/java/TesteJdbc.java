@@ -64,6 +64,16 @@ public class TesteJdbc {
             e.printStackTrace();
         }
     }
+    @Test
+    public void deletar() {
+        SingleConnection.getConnection();
+        try {
+            UsuarioDao objDao = new UsuarioDao();
+            objDao.deletar(1L);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
 
