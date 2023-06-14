@@ -8,16 +8,16 @@ import java.util.List;
 public class TesteJdbc {
 
     @Test
-    public void salvar(){
+    public void salvar() throws Exception {
         SingleConnection.getConnection();
 
         UsuarioDao objDao = new UsuarioDao();
         Usuario obj = new Usuario();
 
-        obj.setId(6L);
         obj.setNome("Mendes de Paula");
         obj.setEmail("mendes@email.com");
         objDao.salvar(obj);
+        System.out.println(obj);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class TesteJdbc {
 
         UsuarioDao objDao = new UsuarioDao();
         try {
-            Usuario obj = objDao.listarPorId(1L);
+            Usuario obj = objDao.listarPorId(7L);
             System.out.println(obj);
         } catch (Exception e){
             e.printStackTrace();
