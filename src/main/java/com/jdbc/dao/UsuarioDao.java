@@ -1,6 +1,7 @@
 package com.jdbc.dao;
 
 import com.jdbc.conexao.SingleConnection;
+import com.jdbc.model.Fone;
 import com.jdbc.model.Usuario;
 
 import java.sql.Connection;
@@ -100,6 +101,27 @@ public class UsuarioDao {
             e.printStackTrace();
         }
     }
+
+    public void salvarFone(Fone fone){
+        try {
+            String sql = "insert into fone(numero, tipo, usuario) values (?,?,?)";
+            PreparedStatement insert = connection.prepareStatement(sql);
+            insert.setString(1, fone.getNumero());
+            insert.setString(2, fone.getTipo());
+            insert.setLong(3, fone.getUsuario());
+            insert.execute();
+            connection.commit();
+        } catch (Exception e){
+            try {
+                connection.rollback();
+            } catch (SQLException eSql){
+                eSql.printStackTrace();
+            }
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 

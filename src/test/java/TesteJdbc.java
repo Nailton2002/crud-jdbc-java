@@ -1,5 +1,6 @@
 import com.jdbc.conexao.SingleConnection;
 import com.jdbc.dao.UsuarioDao;
+import com.jdbc.model.Fone;
 import com.jdbc.model.Usuario;
 import org.junit.jupiter.api.Test;
 
@@ -75,6 +76,19 @@ public class TesteJdbc {
         }
     }
 
+    @Test
+    public void salvarFone() throws Exception {
+        SingleConnection.getConnection();
+        UsuarioDao objDao = new UsuarioDao();
+        Fone obj = new Fone();
+
+        obj.setNumero("(81) 99858-2501");
+        obj.setTipo("Residencial");
+        obj.setUsuario(8L);
+
+        objDao.salvarFone(obj);
+        System.out.println(obj);
+    }
 
 
 
